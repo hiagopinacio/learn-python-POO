@@ -1,9 +1,13 @@
-class Programas:
+from abc import ABCMeta, abstractmethod
+
+
+class Programas(metaclass=ABCMeta):
     def __init__(self, nome, ano):
         self._nome = nome.title()
         self.ano = ano
         self._likes = 0
 
+    @abstractmethod
     def __str__(self):
         return f"{self._nome}, {self.ano} ({self.likes} likes)"
 
@@ -29,7 +33,7 @@ class Filme(Programas):
         self.duração = duracao
 
     def __str__(self):
-        return super().__str__() + f" {self.duração} min"
+        return super().__str__() + f" | {self.duração} min"
 
 
 class Serie(Programas):
@@ -38,7 +42,7 @@ class Serie(Programas):
         self.temporadas = temporadas
 
     def __str__(self):
-        return super().__str__() + f" {self.temporadas} temporadas"
+        return super().__str__() + f"| {self.temporadas} temporadas"
 
 
 class Playlist:
@@ -46,12 +50,10 @@ class Playlist:
         self.nome = nome
         self._programas = programas
 
-    @property
-    def listagem(self):
-        return self._programas
+    def __getitem__(self, item):
+        return self._programas[item]
 
-    @property
-    def tamanho(self):
+    def __len__(self):
         return len(self._programas)
 
 
@@ -79,7 +81,7 @@ tmep.dar_like()
 
 playlist = [vingadores, atlanta, demolidor]
 playlist = Playlist("fds", playlist)
-for programa in playlist.listagem:
+for programa in playlist:
     print(programa)
 
-print(f"tamanho da playlist: {playlist.tamanho}")
+print(f"tamanho da playlist: {len(playlist)}")
