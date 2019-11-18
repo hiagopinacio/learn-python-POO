@@ -22,9 +22,6 @@ class Programas:
     def dar_like(self):
         self._likes += 1
 
-    def testegit(self):
-        pass
-
 
 class Filme(Programas):
     def __init__(self, nome, ano, duracao):
